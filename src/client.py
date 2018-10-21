@@ -12,12 +12,9 @@ class CrowdinClient:
         self.key = key
         self.project = project
 
-    def get(self, method: str, params: Dict=None):
+    def get(self, method: str, params: Dict=None) -> Dict:
         """
         Retrieve request from api
-        :param method:
-        :param params:
-        :return:
         """
         if params is None:
             params = {}
@@ -25,14 +22,14 @@ class CrowdinClient:
         params['key'] = self.key
         params['json'] = ''
 
-        return requests.get(self._make_url(method), params)
+        result = requests.get(self._make_url(method), params)
+
+        return json.loads(result.content.decode('utf-8'))
 
     def _make_url(self, method: str) -> str:
         """
         Generate the api url
-        :param method:
-        :return:
         """
-        url = self.URL
-        return url\
-            .replace('{{name}}', self.project).replace('{{method}}', method)
+        return self.URL\
+            .replace('{{name}}', self.project)\
+            .replace('{{method}}', method)
