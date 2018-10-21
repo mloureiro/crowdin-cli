@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 import argparse
 
-from src.client import CrowdinClient
+from src.api import retrieve_info
 
 parser = argparse.ArgumentParser()
 
@@ -15,7 +15,4 @@ parser.add_argument(
 args = parser.parse_args()
 
 if __name__ == '__main__':
-    client = CrowdinClient(
-        key=args.project_key, project=args.project_identifier)
-    results = client.get(method='info')
-    client.process_results(results)
+    retrieve_info(args)
